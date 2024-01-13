@@ -1,7 +1,8 @@
 package ru.com.bulat.courutineflowsoumin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import ru.com.bulat.courutineflowsoumin.crypto_app.CryptoActivity
 import ru.com.bulat.courutineflowsoumin.databinding.ActivityMainBinding
 import ru.com.bulat.courutineflowsoumin.lessons.lesson_02.UsersActivity
 
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.buttonUsersActivity.setOnClickListener {
             startActivity(UsersActivity.newIntent(this))
+        }
+        binding.buttonCryptoActivity.setOnClickListener {
+            startActivity(CryptoActivity.newIntent(this))
         }
     }
 }
