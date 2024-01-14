@@ -1,4 +1,4 @@
-package ru.com.bulat.courutineflowsoumin.lessons.Lesson_03
+package ru.com.bulat.courutineflowsoumin.lessons.lesson_03
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
