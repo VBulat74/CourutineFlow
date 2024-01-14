@@ -7,4 +7,5 @@
 
     <string name="currency_price">$%s</string>
     <string name="crypto_activity">Crypto Activity</string>
+    <string name="refresh">Refresh</string>
 </resources>

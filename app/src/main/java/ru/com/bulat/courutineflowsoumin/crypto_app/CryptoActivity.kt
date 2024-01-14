@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import ru.com.bulat.courutineflowsoumin.databinding.ActivityCryptoBinding
 
@@ -30,6 +30,9 @@ class CryptoActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupRecyclerView()
         observeViewModel()
+        binding.buttonRefreshList.setOnClickListener{
+            viewModel.refreshList()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -39,23 +42,24 @@ class CryptoActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                .collect {
-                when (it) {
-                    is State.Initial -> {
-                        binding.progressBarLoading.isVisible = false
-                    }
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state
+                    .collect {
+                        when (it) {
+                            is State.Initial -> {
+                                binding.progressBarLoading.isVisible = false
+                            }
 
-                    is State.Loading -> {
-                        binding.progressBarLoading.isVisible = true
-                    }
+                            is State.Loading -> {
+                                binding.progressBarLoading.isVisible = true
+                            }
 
-                    is State.Content -> {
-                        binding.progressBarLoading.isVisible = false
-                        adapter.submitList(it.currencyList)
+                            is State.Content -> {
+                                binding.progressBarLoading.isVisible = false
+                                adapter.submitList(it.currencyList)
+                            }
+                        }
                     }
-                }
             }
         }
     }
